@@ -38,7 +38,7 @@ public class QueueProcessor implements Queue {
             NodeProcessor eliminate = header;
             header = header.next;
             eliminate.next = null;
-            // If queue is empty:
+            // If queue gets empty:
             if (header == null) {
                 last = null;
             }
@@ -52,6 +52,22 @@ public class QueueProcessor implements Queue {
             return null;
         } else {
             return header.labor;
+        }
+    }
+
+    // Combine get() and remove(), because once the task is complete it should be removed
+    public Work settle() {
+        if (header != null) {
+            NodeProcessor eliminate = header;
+            header = header.next;
+            eliminate.next = null;
+            // If queue gets empty:
+            if (header == null) {
+                last = null;
+            }
+            return eliminate.labor;
+        } else {
+            return null;
         }
     }
 }
